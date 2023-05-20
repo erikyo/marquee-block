@@ -1,19 +1,26 @@
 import { registerBlockType } from '@wordpress/blocks';
-import { image } from '@wordpress/icons';
+import { next } from '@wordpress/icons';
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { __experimentalGetCoreBlocks as getCoreBlocks } from '@wordpress/block-library';
-import { BlockEdit, InspectorControls } from '@wordpress/block-editor';
+import {BlockEdit, InspectorControls, useBlockProps} from '@wordpress/block-editor';
 import {PanelBody, RangeControl} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
-
+// The block namespace
 const NAMESPACE = 'wp-blocks/marquee';
 
+// Get the core/paragraph block
 const ParagraphBlock = getCoreBlocks().find(
 	(module) => module.name === 'core/paragraph'
 );
 const { metadata, settings } = ParagraphBlock;
 
+/**
+ * Provides the options panel for the marquee block.
+ *
+ * @param {Object} props The block props.
+ * @constructor
+ */
 const Inspector = (props) => {
 	const {
 		attributes: {
@@ -54,7 +61,7 @@ registerBlockType(NAMESPACE, {
 	...settings,
 	name: NAMESPACE,
 	title: __('Marquee'),
-	icon: image,
+	icon: next,
 	attributes: {
 		...metadata.attributes,
 		speed: {

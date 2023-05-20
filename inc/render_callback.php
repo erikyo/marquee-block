@@ -13,7 +13,7 @@ function render_marquee_block( $attributes, $content ) {
 	if ( ! empty( $attributes['speed'] ) ) {
 
 		// a regex that search for the tag figure with the wp-block-media-text__media class.
-		$regex = '/(.*<p.*?class="block-editor-rich-text".*?>)(.*?)(<\/p>.*)/';
+		$regex = '/(.*<p.*?">)(.*?)(<\/p>.*)/';
 
 		// Get the content of the block.
 		preg_match( $regex, $content, $paragraph, PREG_OFFSET_CAPTURE );
@@ -22,7 +22,7 @@ function render_marquee_block( $attributes, $content ) {
 		$additional_block_class = "marquee_block marquee_speed_" . esc_attr( $attributes['speed'] );
 
 		// Add the custom classes and return the content of the block.
-		$text    = str_replace( "class=\"", "class=\"" . $additional_block_class . " ", $paragraph[2][0] );
+		$text    = str_replace( "class=\"", "class=\"" . $additional_block_class . " ", $paragraph[1][0] );
 		$content = preg_replace( $regex, "$1$text$3", $content );
 	}
 
