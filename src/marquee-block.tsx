@@ -12,8 +12,6 @@ const NAMESPACE = 'wp-blocks/marquee';
 const ParagraphBlock = getCoreBlocks().find(
 	(module) => module.name === 'core/paragraph'
 );
-
-console.log(ParagraphBlock);
 const { metadata, settings } = ParagraphBlock;
 
 const Inspector = (props) => {
@@ -57,6 +55,13 @@ registerBlockType(NAMESPACE, {
 	name: NAMESPACE,
 	title: __('Marquee'),
 	icon: image,
+	attributes: {
+		...metadata.attributes,
+		speed: {
+			type: 'number',
+			default: 200,
+		}
+	},
 	edit: createHigherOrderComponent((BlockEdit) => {
 		return (props) => {
 			return <>
