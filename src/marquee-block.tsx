@@ -1,18 +1,20 @@
 import { registerBlockType } from '@wordpress/blocks';
-import { mediaAndText } from '@wordpress/icons';
-import { __experimentalGetCoreBlocks as getCoreBlocks } from '@wordpress/block-library';
+import { image } from '@wordpress/icons';
 import { createHigherOrderComponent } from '@wordpress/compose';
+import { __experimentalGetCoreBlocks as getCoreBlocks } from '@wordpress/block-library';
 import { BlockEdit, InspectorControls } from '@wordpress/block-editor';
 import {PanelBody, RangeControl} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 
-const NAMESPACE = 'modul-r/custom-media-text';
+const NAMESPACE = 'wp-blocks/marquee';
 
-const MediaTextBlock = getCoreBlocks().find(
-	(module) => module.name === 'core/media-text'
+const ParagraphBlock = getCoreBlocks().find(
+	(module) => module.name === 'core/paragraph'
 );
-const { metadata, settings } = MediaTextBlock;
+
+console.log(ParagraphBlock);
+const { metadata, settings } = ParagraphBlock;
 
 const Inspector = (props) => {
 	const {
@@ -29,7 +31,7 @@ const Inspector = (props) => {
 			<InspectorControls>
 				<PanelBody
 					key={ namespace }
-					title={ __( 'Animation Controls' ) }
+					title={ __( 'Marquee Paragraph Animation Controls' ) }
 					initialOpen={ true }
 				>
 					<RangeControl
@@ -53,8 +55,8 @@ registerBlockType(NAMESPACE, {
 	...metadata,
 	...settings,
 	name: NAMESPACE,
-	title: 'Custom media-text',
-	icon: mediaAndText,
+	title: __('Marquee'),
+	icon: image,
 	edit: createHigherOrderComponent((BlockEdit) => {
 		return (props) => {
 			return <>
