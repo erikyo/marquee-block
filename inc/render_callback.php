@@ -12,18 +12,22 @@ function render_marquee_block( $attributes, $content ) {
 
 	if ( ! empty( $attributes['speed'] ) ) {
 
-		// a regex that search for the tag figure with the wp-block-media-text__media class.
-		$regex = '/(.*<p.*?">)(.*?)(<\/p>.*)/';
+		$regex = '/(<p.*?>)(.*?)(<\/p>)/s';
 
-		// Get the content of the block.
-		preg_match( $regex, $content, $paragraph, PREG_OFFSET_CAPTURE );
+		$additionalBlockClass = "marquee_block";
+		$additionalBlockDataset = 'dataMarqueeSpeed="' . esc_attr($attributes['speed']) . '" ';
 
-		// Set the image class attribute.
-		$additional_block_class = "marquee_block marquee_speed_" . esc_attr( $attributes['speed'] );
+		// Add the custom attributes and return the content of the block.
+		$content = preg_replace_callback($regex, function ($matches) use ($additionalBlockDataset, $additionalBlockClass) {
+			$openingTag = $matches[1];
+			$content = $matches[2];
+			$closingTag = $matches[3];
 
-		// Add the custom classes and return the content of the block.
-		$text    = str_replace( "class=\"", "class=\"" . $additional_block_class . " ", $paragraph[1][0] );
-		$content = preg_replace( $regex, "$1$text$3", $content );
+			$modifiedOpeningTag = str_replace('<p ', '<p ' . $additionalBlockDataset, $openingTag);
+			$modifiedOpeningTag = str_replace('class="', 'class="' . $additionalBlockClass . ' ', $modifiedOpeningTag);
+
+			return $modifiedOpeningTag . $content . $closingTag;
+		}, $content);
 	}
 
 	return $content;
