@@ -32,27 +32,25 @@ const Inspector = (props) => {
 
 	// Render the block editor and display the query post loop.
 	return (
-		<>
-			<InspectorControls>
-				<PanelBody
-					key={ namespace }
-					title={ __( 'Marquee Paragraph Animation Controls' ) }
-					initialOpen={ true }
-				>
-					<RangeControl
-						onChange={ (value ) =>
-							setAttributes( {
-								speed: value ,
-							} )
-						}
-						label={ __( 'Animation Speed' ) }
-						value={ speed }
-						min={ 10 }
-						max={ 1000 }
-					/>
-				</PanelBody>
-			</InspectorControls>
-		</>
+		<InspectorControls>
+			<PanelBody
+				key={ namespace }
+				title={ __( 'Marquee Paragraph Animation Controls' ) }
+				initialOpen={ true }
+			>
+				<RangeControl
+					onChange={ (value ) =>
+						setAttributes( {
+							speed: value ,
+						} )
+					}
+					label={ __( 'Animation Speed' ) }
+					value={ speed }
+					min={ 10 }
+					max={ 1000 }
+				/>
+			</PanelBody>
+		</InspectorControls>
 	);
 };
 
@@ -71,10 +69,12 @@ registerBlockType(NAMESPACE, {
 	},
 	edit: createHigherOrderComponent((BlockEdit) => {
 		return (props) => {
-			return <>
+			return (
+				<>
 				<BlockEdit {...props} />
+
 				<Inspector {...props} />
-			</>;
+			</>);
 		};
 	}, 'withInspectorControl')(settings.edit),
 });

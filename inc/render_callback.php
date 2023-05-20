@@ -15,7 +15,7 @@ function render_marquee_block( $attributes, $content ) {
 		$regex = '/(<p.*?>)(.*?)(<\/p>)/s';
 
 		$additionalBlockClass = "marquee_block";
-		$additionalBlockDataset = 'dataMarqueeSpeed="' . esc_attr($attributes['speed']) . '" ';
+		$additionalBlockDataset = 'data-marquee-speed="' . esc_attr($attributes['speed']) . '" ';
 
 		// Add the custom attributes and return the content of the block.
 		$content = preg_replace_callback($regex, function ($matches) use ($additionalBlockDataset, $additionalBlockClass) {
