@@ -77,8 +77,6 @@ registerBlockType(NAMESPACE, {
 								options={ [
 									{ value: 'left', label: __( 'Left' ) },
 									{ value: 'right', label: __( 'Right' ) },
-									{ value: 'top', label: __( 'Top' ) },
-									{ value: 'bottom', label: __( 'Bottom' ) },
 								] }
 								onChange={ (value ) =>
 									setAttributes( {

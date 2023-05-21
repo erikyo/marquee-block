@@ -12,15 +12,11 @@ function getSpanItemWidth(clone: HTMLElement) {
 function getDirectionOptions(direction: string) {
 	switch (direction) {
 		case 'left':
-			return { transform: 'translateX', direction: false };
+			return false
 		case 'right':
-			return { transform: 'translateX', direction: true };
-		case 'top':
-			return { transform: 'translateY', direction: false };
-		case 'bottom':
-			return { transform: 'translateY', direction: true };
+			return true
 		default:
-			return { transform: 'translateX', direction: true };
+			return true
 	}
 }
 
@@ -31,24 +27,20 @@ function marquee() {
 		let speed = parseInt(originalParagraph?.dataset?.marqueeSpeed ?? "200");
 		let direction = String(originalParagraph?.dataset?.marqueeDirection ?? "left");
 
-		// parse the direction options
-		const directionOptions = getDirectionOptions(direction);
-
 		// Get the inner text
 		const text = originalParagraph.innerHTML;
 
-		// the wrapper of the marquee
+		// create an inner wrapper for the text
 		const cloneContainer = document.createElement('span');
 		cloneContainer.classList.add('marquee-block-inner');
 
-		// the clone of the paragraph
+		// the clone of the single paragraph
 		const cloneElement = document.createElement('span');
 		cloneElement.innerHTML = text;
 
 		// Calculate the width of the item and screen
 		const textWidth = getSpanItemWidth(cloneElement);
 		const paragraphWidth = originalParagraph.clientWidth || window.innerWidth || document.documentElement.clientWidth;
-		const paragraphHeight = originalParagraph.clientHeight || window.innerHeight || document.documentElement.clientHeight;
 		const repeatCount = Math.ceil(paragraphWidth / textWidth) + 1;
 
 		// Repeat the item to fill the screen
@@ -61,19 +53,34 @@ function marquee() {
 		originalParagraph.innerHTML = '';
 		originalParagraph.appendChild(cloneContainer);
 
+		// parse the direction options
+		const toRight = getDirectionOptions(direction);
+
 		// Set the speed of the marquee
-		let directionMultiplier = directionOptions.direction ? -1 : 1;
-		let directionLimitSize = direction === 'left' || direction === 'right' ?  paragraphWidth : paragraphHeight;
-		let position = directionOptions.direction ? 0 : directionLimitSize * -directionMultiplier;
+		let directionMultiplier = toRight ? 1 : -1;
+
+		// Set the start and end position
+		let initialPosition = toRight ? textWidth * -directionMultiplier : 0;
+		let position = initialPosition;
 
 		function updatePosition() {
-			position += speed / 1000; // Adjust the speed by changing the increment value
+			const positionSpeed = speed / 1000; // Adjust the speed by changing the increment value
 
-			if (position >= directionLimitSize) {
-				position = 0;
+			if (toRight) {
+				position = position + positionSpeed;
+
+				if (position >= 0) {
+					position = initialPosition;
+				}
+			} else {
+				position = position - positionSpeed;
+
+				if (position <= -textWidth) {
+					position = initialPosition;
+				}
 			}
 
-			cloneContainer.style.transform = `${directionOptions.transform}(${position * directionMultiplier}px)`;
+			cloneContainer.style.transform = `translateX(${position}px)`;
 
 			requestAnimationFrame(updatePosition);
 		}
