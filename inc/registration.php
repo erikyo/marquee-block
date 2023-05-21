@@ -23,7 +23,6 @@ function register_marquee_block() {
 	$cloned_block->name = $namespace . '/' . $block_title;
 	$cloned_block->title = __( 'Marquee', 'wbm' );
 	$cloned_block->render_callback = 'render_marquee_block';
-	$cloned_block->className = 'marquee_block';
 
 	// Register the new block type.
 	register_block_type( $namespace . '/' . $block_title, $cloned_block );

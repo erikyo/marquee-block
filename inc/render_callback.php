@@ -10,24 +10,21 @@
  */
 function render_marquee_block( $attributes, $content ) {
 
-	if ( ! empty( $attributes['speed'] ) ) {
+	$regex = '/(<p(?:\s+[^>]*?)?>)(.*?)(<\/p>)/s';
 
-		$regex = '/(<p.*?>)(.*?)(<\/p>)/s';
+	$speed = !empty($attributes['speed']) ? esc_attr($attributes['speed']) : 500;
+	$direction = !empty($attributes['scrollDirection']) ? esc_attr($attributes['scrollDirection']) : 'left';
 
-		$additionalBlockClass = "marquee_block";
-		$additionalBlockDataset = 'data-marquee-speed="' . esc_attr($attributes['speed']) . '" ';
+	$additionalBlockDataset = 'data-marquee-speed="' . $speed . '" data-marquee-direction="' . $direction . '" ';
 
-		// Add the custom attributes and return the content of the block.
-		$content = preg_replace_callback($regex, function ($matches) use ($additionalBlockDataset, $additionalBlockClass) {
-			$openingTag = $matches[1];
-			$content = $matches[2];
-			$closingTag = $matches[3];
+	$additionalClass = 'marquee-block';
 
-			$modifiedOpeningTag = str_replace('<p ', '<p ' . $additionalBlockDataset, $openingTag);
-			$modifiedOpeningTag = str_replace('class="', 'class="' . $additionalBlockClass . ' ', $modifiedOpeningTag);
-
-			return $modifiedOpeningTag . $content . $closingTag;
-		}, $content);
+	if (strpos($content, 'class=') === false) {
+		// If class attribute doesn't exist, add it
+		$content = str_replace('<p', '<p '.$additionalBlockDataset.'class="' . $additionalClass . '"', $content);
+	} else {
+		// If class attribute exists, append the additional class
+		$content = str_replace('class="', $additionalBlockDataset .'class="' . $additionalClass . ' ', $content);
 	}
 
 	return $content;

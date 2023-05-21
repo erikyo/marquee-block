@@ -1,0 +1,7 @@
+.marquee-block {
+	overflow: hidden;
+	&-inner {
+		white-space: nowrap;
+		display: block;
+	}
+}
