@@ -28,6 +28,8 @@ function modul_r_enqueue_marquee_block() {
 	// Register the new block type.
 	wp_enqueue_script( 'wp-blocks-marquee-admin',  plugins_url() . '/marquee-block/build/marquee-block.js', $asset['dependencies'], $asset['version'] );
 }
+
+// Add Block scripts
 add_action( 'enqueue_block_editor_assets', 'modul_r_enqueue_marquee_block' );
 
 
@@ -45,5 +47,5 @@ function modul_r_theme_scripts() {
 	wp_enqueue_style( 'wp-blocks-marquee',  plugins_url() . '/marquee-block/build/marquee-block.css', $asset['dependencies'], $asset['version'] );
 }
 
-add_action( 'wp_enqueue_scripts', 'modul_r_theme_scripts' ); // Add Theme admin scripts
-add_action( 'admin_enqueue_scripts', 'modul_r_theme_scripts' ); // Add Theme admin scripts
+// Add Theme scripts
+add_action( 'wp_enqueue_scripts', 'modul_r_theme_scripts' );

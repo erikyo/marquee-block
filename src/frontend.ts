@@ -1,4 +1,8 @@
-function getSpanItemWidth(clone: HTMLElement) {
+function getSpanItemWidth(el: HTMLElement) {
+	// make a copy of the element
+	const clone = el.cloneNode(true) as HTMLElement;
+	clone.style.height = "0";
+	clone.style.display = 'inline-block';
 	// Append the span to the body
 	document.body.appendChild(clone);
 	// Get the width
@@ -14,7 +18,6 @@ function getDirectionOptions(direction: string) {
 		case 'left':
 			return false
 		case 'right':
-			return true
 		default:
 			return true
 	}
@@ -39,7 +42,7 @@ function marquee() {
 		cloneElement.innerHTML = text;
 
 		// Calculate the width of the item and screen
-		const textWidth = getSpanItemWidth(cloneElement);
+		const textWidth = getSpanItemWidth(originalParagraph);
 		const paragraphWidth = originalParagraph.clientWidth || window.innerWidth || document.documentElement.clientWidth;
 		const repeatCount = Math.ceil(paragraphWidth / textWidth) + 1;
 

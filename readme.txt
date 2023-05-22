@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== Marquee Block ===
 Contributors: codekraft
 Tags: marquee, animation, scrolling, text
 Requires at least: WordPress 5.8
@@ -8,8 +8,10 @@ License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
+You thought you had gotten rid of it! Haha, but no!
+Marquee Block is a WordPress plugin that provides a simple and lightweight solution for creating a marquee effect with text content on your website. The plugin emulates the marquee functionality using JavaScript and CSS animation.
 
-Plugin Name is a WordPress plugin that provides a simple and lightweight solution for creating a marquee effect with text content on your website. The plugin emulates the marquee functionality using JavaScript and CSS animation.
+This block is an example on how clone core blocks and isn't intended to be used in a production environment
 
 == Features ==
 
@@ -44,7 +46,7 @@ Initial release
 == Upgrade Notice ==
 
 = 1.0.0 =
-Initial release of the Plugin Name plugin.
+Initial release of the Marquee Block plugin.
 
 == License ==
 
